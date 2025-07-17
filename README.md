@@ -1,25 +1,78 @@
+# 📊 CreativeOps – Centralized Ops & Comms System
+
+A unified platform to manage clients, talents, gigs, and communications for creative operations teams.
+
+---
+
+## 🚀 Proposal Overview
+
+### ✅ Selected Modules
+
+- **CRM System** – Unified management of clients, talents, and gigs
+- **Project Tracker** – Gig lifecycle and status tracking
+- **Comms Hub** – Centralized logging of communications (multi-source)
+- **Dashboard** – Real-time operational overview and insights
+
+### 💡 Value Proposition
+
+- 🔽 **40%** reduction in information silos
+- ⚡ **30%** faster client–talent matching
+- 📚 Centralized audit trail for all operations
+- 🤖 Automated workflow triggers
+
+---
+
+## 🏗️ System Architecture
+
+```mermaid
+graph TD
+    A[User Interface] --> B[Next.js Frontend]
+    B --> C[API Routes]
+    C --> D[Data Services]
+    D --> E[PostgreSQL Database]
+    D --> F[External Integrations]
+
+    subgraph External Systems
+        F --> G[Slack]
+        F --> H[Notion]
+        F --> I[Google Sheets]
+        F --> J[Twilio]
+    end
+```
+
+---
+
+## 🧱 Tech Stack
+
+| Category         | Technology                       |
+| ---------------- | -------------------------------- |
+| Frontend         | Next.js 14, TypeScript           |
+| UI Framework     | shadcn/ui, Tailwind CSS          |
+| State Management | React Context, Zustand           |
+| Data Fetching    | React Query                      |
+| Backend          | Next.js API Routes               |
+| ORM              | Prisma                           |
+| Database         | PostgreSQL                       |
+| Auth             | NextAuth.js                      |
+| Integrations     | Webhooks (Slack, Notion, Twilio) |
+| Monitoring       | Sentry                           |
+
+---
+
+## 📦 Project Structure
+
 ```
 /app
   /(dashboard)
-    /clients
-      /[id]
-        page.tsx
-    /talents
-      /[id]
-        page.tsx
-    /gigs
-      /[id]
-        page.tsx
-    /comms
-      page.tsx
+    /clients/[id]/page.tsx
+    /talents/[id]/page.tsx
+    /gigs/[id]/page.tsx
+    /comms/page.tsx
     page.tsx
   /api
-    /clients
-      route.ts
-    /talents
-      route.ts
-    /gigs
-      route.ts
+    /clients/route.ts
+    /talents/route.ts
+    /gigs/route.ts
   /components
     /dashboard
       stats-cards.tsx
@@ -37,7 +90,7 @@
     /comms
       comms-form.tsx
       comms-history.tsx
-    layout
+    /layout
       sidebar.tsx
       topbar.tsx
   types.ts
@@ -45,107 +98,15 @@
   page.tsx
 ```
 
-# Proposal Overview
+---
 
-## Selected Tasks:
+## 📌 Features & Documentation
 
-    CRM System: Unified management of clients, talents, and gigs
+### 1. 🧠 CRM System
 
-    Project Tracker: Gig lifecycle management with status tracking
+#### ER Diagram
 
-    Comms Hub: Centralized communication logging with multi-source input
-
-    Dashboard: Real-time operational overview with actionable insights
-
-## Value Proposition:
-
-    40% reduction in information silos
-
-    30% faster client-talent matching
-
-    Centralized audit trail for all operations
-
-    Automated workflow triggers
-
-## System Architecture
-
-```
-graph TD
-    A[User Interface] --> B[Next.js Frontend]
-    B --> C[API Routes]
-    C --> D[Data Services]
-    D --> E[PostgreSQL Database]
-    D --> F[External Integrations]
-
-    subgraph External Systems
-        F --> G[Slack]
-        F --> H[Notion]
-        F --> I[Google Sheets]
-        F --> J[Twilio]
-    end
-```
-
-## Key Components:
-
-    Presentation Layer: Next.js 14 with App Router
-
-    Business Logic: Next.js API Routes + Services
-
-    Data Layer: PostgreSQL with Prisma ORM
-
-    Integrations: Webhook-based architecture
-
-## Tech Stack
-
-Category | Technology
-Frontend | Next.js 14, TypeScript
-UI Framework shadcn UI, Tailwind CSS
-State Management | React Context + Zustand
-Data Fetching | React Query
-Backend | Next.js API Routes
-ORM | Prisma
-Database PostgreSQL
-Auth | NextAuth.js
-Integrations | Zapier Webhooks
-Production | Roadmap
-
-### Phase 1: MVP Launch (2 Weeks)
-
-    Dockerize application
-
-    Implement PostgreSQL backend
-
-    Add NextAuth authentication
-
-    Deploy to Vercel
-
-    Set up Sentry error monitoring
-
-### Phase 2: Integrations (1 Week)
-
-    Implement Slack notification system
-
-    Create Notion sync functionality
-
-    Add Twilio WhatsApp messaging
-
-### Phase 3: Scalability (Ongoing)
-
-    Redis caching layer
-
-    Kubernetes orchestration
-
-    Load testing with k6
-
-    Feature flagging with LaunchDarkly
-
-## Feature Documentation
-
-### 1. CRM System
-
-#### Entities:
-
-```
+```mermaid
 erDiagram
     CLIENTS ||--o{ GIGS : has
     TALENTS ||--o{ GIGS : assigned-to
@@ -171,40 +132,39 @@ erDiagram
     }
 ```
 
-## Key Features:
+#### Key Capabilities
 
-    Client tier segmentation (High-value, High-frequency)
+- Tier-based client segmentation
+- Talent availability & style tag filtering
+- Style-based matching algorithm
+- Embedded client communication preferences
 
-    Talent availability calendar
+---
 
-    Style-based matching algorithm
+### 2. 💬 Comms Hub
 
-    Client communication preferences
+#### Communication Model
 
-### 2. Comms Hub
-
-#### Data Model:
-
-```
+```ts
 interface Communication {
   id: string;
-  type: 'call' | 'note' | 'email' | 'whatsapp';
+  type: "call" | "note" | "email" | "whatsapp";
   content: string;
   timestamp: DateTime;
-  linkedEntity: 'client' | 'talent' | 'gig';
+  linkedEntity: "client" | "talent" | "gig";
   entityId: string;
   metadata: {
     duration?: number;
     participants?: string[];
-    source?: 'Zoom' | 'Google Meet' | 'Upload';
+    source?: "Zoom" | "Google Meet" | "Upload";
     fileUrl?: string;
   };
 }
 ```
 
-#### Input Processing:
+#### Input Pipeline
 
-```
+```mermaid
 flowchart TD
     A[Input Source] --> B{Type}
     B -->|Audio File| C[Speech-to-Text]
@@ -217,31 +177,52 @@ flowchart TD
     G --> H[Database Storage]
 ```
 
-## PRD Summary
+---
 
-### Core Objectives:
+## 🗓️ Roadmap
 
-    Reduce operational friction in creative workflows
+### 🔹 Phase 1: MVP Launch (2 Weeks)
 
-    Centralize client-talent communications
+- ✅ Dockerize application
+- ✅ Setup PostgreSQL with Prisma ORM
+- ✅ Add NextAuth for authentication
+- ✅ Deploy to Vercel
+- ✅ Configure Sentry for error tracking
 
-    Provide real-time gig status visibility
+### 🔸 Phase 2: Integrations (1 Week)
 
-    Automate routine operational tasks
+- 🔔 Slack notifications via webhook
+- 📄 Notion sync for client/talent notes
+- 💬 WhatsApp messaging via Twilio
 
-### Success Metrics:
+### 🔺 Phase 3: Scalability (Ongoing)
 
-    30% reduction in gig setup time
+- 🧠 Redis for caching
+- ☸️ Kubernetes orchestration
+- 🧪 Load testing with k6
+- 🪄 Feature flagging with LaunchDarkly
 
-    90% of communications searchable in <10s
+---
 
-    95% gig status accuracy
+## 🎯 Core Objectives
 
-    5+ weekly automated workflows per user
+- Reduce creative workflow friction
+- Centralize client–talent communications
+- Real-time gig visibility for all teams
+- Automate operationally repetitive tasks
 
-### User Workflow:
+### 📈 Success Metrics
 
-```
+- ⏱️ 30% reduction in gig setup time
+- 🔍 90% of comms searchable < 10s
+- 📊 95% gig status accuracy
+- ⚙️ 5+ automated workflows per user/week
+
+---
+
+## 🧭 User Workflow
+
+```mermaid
 journey
     title Gig Lifecycle
     section Initiation
@@ -258,73 +239,31 @@ journey
       Payment processing: 2: Finance
 ```
 
-## Technical Specifications
+---
 
-### API Endpoints:
+## 🔐 Security
 
-Endpoint | Method | Description
-/api/comms | POST | Log new communication
-/api/comms/search | GET | Search communications
-/api/gigs | POST | Create new gig
-/api/gigs/:id/status | PATCH | Update gig status
-/api/match | POST | Talent-gig matching
-/api/integrations/slack | POST | Slack webhook handler
+### Encryption
 
-### Database Schema Highlights:
+- AES-256 encryption at rest
+- TLS 1.3 encryption in transit
 
-```
-model Communication {
-  id           String   @id @default(uuid())
-  type         String
-  content      String
-  timestamp    DateTime
-  linkedEntity String
-  entityId     String
-  metadata     Json?
-}
+### Access Control
 
-model Client {
-  id          String   @id @default(uuid())
-  name        String
-  type        String
-  industry    String
-  communicationPrefs Json?
-  gigs        Gig[]
-}
+- Role-based access control (RBAC):  
+  _Admin, Ops, TalentManager, Finance_
+- Attribute-based access for sensitive fields
 
-model Talent {
-  id               String   @id @default(uuid())
-  name             String
-  skills           String[]
-  availability     Json?
-  styleTags        String[]
-  gigs             Gig[]
-}
-```
+### Auditing
 
-### Security Considerations
+- Immutable logs for all data changes
+- 90-day log retention policy
 
-#### 1.Data Encryption:
+---
 
-    AES-256 at rest
+## 📡 Deployment Architecture
 
-    TLS 1.3 in transit
-
-#### 2.Access Control:
-
-    RBAC with 4 roles (Admin, Ops, TalentManager, Finance)
-
-    Attribute-based access control for sensitive data
-
-#### 3.Audit Logging:
-
-    Immutable logs for all data mutations
-
-    90-day retention policy
-
-### Deployment Architecture
-
-```
+```mermaid
 graph LR
     A[CDN] --> B[Vercel Edge]
     B --> C[Next.js Server]
@@ -337,37 +276,4 @@ graph LR
     K[Google Meet] --> I
 ```
 
-### Infrastructure:
-
-##### Serverless functions for API routes
-
-##### Managed PostgreSQL (AWS RDS)
-
-##### Redis caching layer
-
-##### Distributed file storage (AWS S3)
-
-### Future Enhancements
-
-#### 1. AI-Powered Features:
-
-        Communication sentiment analysis
-
-        Talent matching recommendations
-
-        Brief auto-generation
-
-#### 2. Mobile Experience:
-
-        React Native companion app
-
-        Camera-based document ingestion
-
-#### 3. Advanced Analytics:
-
-        Client profitability dashboards
-
-        Talent performance scoring
-
-        Project risk prediction
-# operations_management
+---

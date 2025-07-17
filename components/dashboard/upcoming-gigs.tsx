@@ -1,6 +1,8 @@
+import React from "react";
 import { format } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import { GanttChart, Calendar, Camera } from "lucide-react";
+import Link from "next/link";
 
 export function UpcomingGigs() {
   const gigs = [
@@ -37,13 +39,15 @@ export function UpcomingGigs() {
   ];
 
   const getCategoryIcon = (category: string) => {
-    const icons: Record<string, JSX.Element> = {
+    const icons = {
       Photography: <Camera className="h-4 w-4 mr-2" />,
       "Content Writing": <span className="mr-2">✍️</span>,
       Direction: <GanttChart className="h-4 w-4 mr-2" />,
       Styling: <span className="mr-2">👗</span>,
     };
-    return icons[category] || <Calendar className="h-4 w-4 mr-2" />;
+    
+    // Return icon or default calendar icon
+    return icons[category as keyof typeof icons] || <Calendar className="h-4 w-4 mr-2" />;
   };
 
   return (
@@ -70,9 +74,11 @@ export function UpcomingGigs() {
         </div>
       ))}
       <div className="text-center pt-4">
-        <button className="text-sm text-primary hover:underline">
-          View all upcoming gigs
-        </button>
+        <Link href="/gigs">
+          <button className="text-sm text-primary hover:underline">
+            View all upcoming gigs
+          </button>
+        </Link>
       </div>
     </div>
   );

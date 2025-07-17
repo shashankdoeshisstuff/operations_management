@@ -46,41 +46,47 @@ export interface Client {
   attachments_docs_provided?: string;
 }
 
-
 export interface Talent {
-  id: string;
-  name: string;
-  city: string;
-  hometown: string;
-  categories: string[];
-  skills: string[];
-  style_tags: string[];
-  budget_range: string;
-  experience_years: number;
-  platforms: string[];
-  soft_skills: {
-    communication: string;
-    punctuality: string;
-    collaboration: string;
-    initiative: string;
-    adaptability: string;
+  id?: string;
+  name?: string;
+  city?: string;
+  hometown?: string;
+
+  categories?: string[];
+  skills?: string[];
+  style_tags?: string[];
+  budget_range?: string;
+  experience_years?: number;
+  platforms?: string[];
+
+  softSkills?: {
+    communication?: string;
+    punctuality?: string;
+    collaboration?: string;
+    initiative?: string;
+    adaptability?: string;
   };
-  software_skills: Record<string, number>;
-  languages: string[];
-  past_credits: string[];
-  endorsements: string[];
-  interest_tags: string[];
-  availability_calendar: {
-    city: string;
-    from: string;
-    to: string;
-  }[];
-  tier_tags: string[];
-  portfolio: {
-    title: string;
-    tags: string[];
-    keywords: string[];
-  }[];
+
+  software_skills?: Record<string, number | undefined>;
+
+  languages?: string[];
+  pastCredits?: string[];
+  endorsements?: string[];
+  interestTags?: string[];
+
+  availability_calendar?: Array<{
+    city?: string;
+    from?: string;
+    to?: string;
+  }>;
+
+  tierTags?: string[];
+
+  portfolio?: Array<{
+    title?: string;
+    tags?: string[];
+    keywords?: string[];
+  }>;
 }
 
 export interface Gig {

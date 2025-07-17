@@ -1,26 +1,21 @@
 import { ClientDetail } from "@/components/clients/client-detail";
 import { notFound } from "next/navigation";
+import clients from '@/data/clients_database.json'
 
-// Define TypeScript interface for client data
-interface Client {
+// Define your params type separately
+type ClientPageParams = {
   id: string;
-  name: string;
-  company_name: string;
-  industry: string;
-  // Add other required properties
 }
 
-// Use relative path to JSON file
-import clientsData from "@/data/clients_database.json";
-
+// Define a custom Props interface for ClientDetailPage
 interface ClientDetailPageProps {
-  params: { id: string };
+  params: Promise<ClientPageParams>;
 }
 
-export default function ClientDetailPage({ params }: ClientDetailPageProps) {
-  // Cast JSON data to Client array
-  const clients: Client[] = clientsData as Client[];
-  const client = clients.find((c) => c.id === params.id);
+export default async function ClientDetailPage({ params }: ClientDetailPageProps) {
+  const { id } = await params;
+
+  const client = clients.find(c => c.id === id);
 
   if (!client) {
     return notFound();

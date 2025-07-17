@@ -2,8 +2,21 @@ import { GigDetail } from "@/components/gigs/gig-detail";
 import { notFound } from "next/navigation";
 import gigs from "@/data/gigs_dataset.json";
 
-export default function GigDetailPage({ params }: { params: { id: string } }) {
-  const gig = gigs.find(g => g.id === params.id);
+// Define the type for your specific params
+type GigPageParams = {
+  id: string;
+};
+
+// Define a custom Props interface for ClientDetailPage
+interface GigDetailPageProps {
+  params: Promise<GigPageParams>;
+}
+
+// Use PageProps<GigPageParams> for the component's props
+export default async function GigDetailPage({ params }: GigDetailPageProps) {
+  const { id } = await params;
+
+  const gig = gigs.find(g => g.id === id);
   
   if (!gig) {
     return notFound();

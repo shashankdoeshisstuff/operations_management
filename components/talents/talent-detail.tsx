@@ -15,27 +15,27 @@ export function TalentDetail({ talent }: { talent: Talent }) {
           <CardContent className="grid grid-cols-2 gap-4">
             <div>
               <p className="text-sm text-muted-foreground">Location</p>
-              <p>{talent.city}</p>
+              <p>{talent?.city}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Hometown</p>
-              <p>{talent.hometown}</p>
+              <p>{talent?.hometown}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Experience</p>
-              <p>{talent.experience_years} years</p>
+              <p>{talent?.experience_years} years</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Budget Range</p>
-              <p>{talent.budget_range}</p>
+              <p>{talent?.budget_range}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Categories</p>
-              <p>{talent.categories.join(", ")}</p>
+              <p>{talent?.categories?.join(", ")}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Languages</p>
-              <p>{talent.languages.join(", ")}</p>
+              <p>{talent?.languages?.join(", ")}</p>
             </div>
           </CardContent>
         </Card>
@@ -49,7 +49,7 @@ export function TalentDetail({ talent }: { talent: Talent }) {
               <div>
                 <p className="text-sm text-muted-foreground mb-2">Skills</p>
                 <div className="flex flex-wrap gap-2">
-                  {talent.skills.map((skill, index) => (
+                  {talent?.skills?.map((skill, index) => (
                     <Badge key={index} variant="secondary">{skill}</Badge>
                   ))}
                 </div>
@@ -58,7 +58,7 @@ export function TalentDetail({ talent }: { talent: Talent }) {
               <div>
                 <p className="text-sm text-muted-foreground mb-2">Style Tags</p>
                 <div className="flex flex-wrap gap-2">
-                  {talent.style_tags.map((tag, index) => (
+                  {talent?.style_tags?.map((tag, index) => (
                     <Badge key={index}>{tag}</Badge>
                   ))}
                 </div>
@@ -66,8 +66,8 @@ export function TalentDetail({ talent }: { talent: Talent }) {
               
               <div>
                 <p className="text-sm text-muted-foreground mb-2">Software Skills</p>
-                <div className="flex flex-wrap gap-2">
-                  {Object.entries(talent.software_skills).map(([skill, level], index) => (
+               <div className="flex flex-wrap gap-2">
+                  {Object.entries(talent?.software_skills ?? {})?.map(([skill, level], index) => (
                     <Badge key={index} variant="outline">
                       {skill}: {level}/10
                     </Badge>
@@ -84,16 +84,16 @@ export function TalentDetail({ talent }: { talent: Talent }) {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-4">
-              {talent.portfolio.map((project, index) => (
+              {talent?.portfolio?.map((project, index) => (
                 <div key={index} className="border rounded-lg p-4">
                   <h3 className="font-medium">{project.title}</h3>
                   <div className="mt-2 flex flex-wrap gap-1">
-                    {project.tags.map((tag, idx) => (
+                    {project?.tags?.map((tag, idx) => (
                       <Badge key={idx} variant="secondary">{tag}</Badge>
                     ))}
                   </div>
                   <div className="mt-2 flex flex-wrap gap-1">
-                    {project.keywords.map((kw, idx) => (
+                    {project?.keywords?.map((kw, idx) => (
                       <span key={idx} className="text-xs bg-muted px-2 py-1 rounded">
                         {kw}
                       </span>
@@ -113,11 +113,13 @@ export function TalentDetail({ talent }: { talent: Talent }) {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {talent.availability_calendar.map((avail, index) => (
+              {talent?.availability_calendar?.map((avail, index) => (
                 <div key={index} className="border rounded-lg p-3">
-                  <div className="font-medium">{avail.city}</div>
+                  <div className="font-medium">{avail.city ?? "Unknown City"}</div>
                   <div className="text-sm text-muted-foreground">
-                    {new Date(avail.from).toLocaleDateString()} - {new Date(avail.to).toLocaleDateString()}
+                    {avail.from && avail.to
+                      ? `${new Date(avail.from).toLocaleDateString()} - ${new Date(avail.to).toLocaleDateString()}`
+                      : "Date not available"}
                   </div>
                 </div>
               ))}

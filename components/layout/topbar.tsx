@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Bell, Search } from "lucide-react";
 import { UserNav } from "./user-nav";
 import { Button } from "../ui/button";
-import { BackButton } from "./backbutton";
+import { BackButton } from "@/components/backbutton";
 
 export function Topbar() {
   return (

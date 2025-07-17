@@ -2,8 +2,21 @@ import { TalentDetail } from "@/components/talents/talent-detail";
 import { notFound } from "next/navigation";
 import talents from "@/data/talent_profiles.json";
 
-export default function TalentDetailPage({ params }: { params: { id: string } }) {
-  const talent = talents.find(t => t.id === params.id);
+// Define the type for your specific params
+type TalentPageParams = {
+  id: string;
+};
+
+// Define a custom Props interface for ClientDetailPage
+interface TalentDetailPageProps {
+  params: Promise<TalentPageParams>;
+}
+
+// Use PageProps<TalentPageParams> for the component's props
+export default async function TalentDetailPage({ params }: TalentDetailPageProps) {
+  const { id } = await params;
+
+  const talent = talents.find(t => t.id === id);
   
   if (!talent) {
     return notFound();

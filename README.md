@@ -4,6 +4,10 @@ A unified platform to manage clients, talents, gigs, and communications for crea
 
 ---
 
+## Live Demo
+
+[View Live Demo on Vercel](https://operations-management.vercel.app/)
+
 ## 🚀 Proposal Overview
 
 ### ✅ Selected Modules

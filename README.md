@@ -2,6 +2,8 @@
 
 A unified platform to manage clients, talents, gigs, and communications for creative operations teams.
 
+CreativeOps is a centralized platform designed for creative operations teams to manage clients, talents, gigs, and communications in one place. It streamlines workflows with a CRM, project tracker, and comms hub, reducing information silos. Built with Next.js, it features real-time dashboards, automated workflows, and integrations with Slack, Notion, and Twilio for seamless operational oversight.
+
 ---
 
 ## Live Demo
